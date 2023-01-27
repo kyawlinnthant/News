@@ -12,6 +12,10 @@ object Versions {
     val compose = "1.3.3"
     val composeCompiler = "1.3.2"
     val splash = "1.0.0"
+    val systemUi = "0.28.0"
+    val navigationHilt = "1.0.0"
+    val navigationCompose = "2.5.3"
+
 
     //retrofit
     val retrofit = "2.9.0"
@@ -30,4 +34,6 @@ object Versions {
     val junit = "4.13.2"
     val extJunit = "1.1.5"
     val espresso = "3.5.1"
+    val truth = "1.1.3"
+
 }

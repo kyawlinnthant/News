@@ -23,7 +23,7 @@ plugins {
         }
         val apiKey = gradleLocalProperties(rootDir).getProperty("API.KEY")
         buildConfigField(type = "String", name = "API_KEY", value = apiKey)
-        buildConfigField(type = "String", name = "BASE_URL", value = "\"https://newsapi.org/\"")
+        buildConfigField(type = "String", name = "BASE_URL", value = "\"https://api.themoviedb.org/\"")
     }
 
     buildTypes {
@@ -54,22 +54,23 @@ plugins {
 }
 
 dependencies {
-    this need AppDependencies.app
+    //app dependencies
+    this implements AppDependencies.appDependencies
+    this implement AppDependencies.appMaterial
+    this implement AppDependencies.appSplash
+    this implement AppDependencies.appSystemUi
     //compose
-    this need AppDependencies.compose
-    //network
-    this need AppDependencies.network
-    //db
-    this need AppDependencies.db
-    this kapt AppDependencies.dbKapt
-    this annotate AppDependencies.dbAnnotation
+    this needs AppDependencies.appCompose
+    this implement AppDependencies.appNavigation
     //di
-    this need AppDependencies.di
-    this kapt AppDependencies.diKapt
+    this needs AppDependencies.appDi
+    //network
+    this needs AppDependencies.appNetwork
+    //db
+    this needs AppDependencies.appDb
+
     //android test
-    this androidTest AppDependencies.androidTest
+    this androidTests AppDependencies.appAndroidTest
     //unit test
-    this unitTest AppDependencies.unitTest
-    //debug test
-    this debugTest AppDependencies.debugTest
+    this unitTests AppDependencies.appUnitTest
 }

@@ -4,7 +4,8 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        this dependent AppDependencies.dependency
+        this dependents AppDependencies.projectDependencies
+        this dependent AppDependencies.projectHilt
     }
 }
 tasks.register("clean", Delete::class){
