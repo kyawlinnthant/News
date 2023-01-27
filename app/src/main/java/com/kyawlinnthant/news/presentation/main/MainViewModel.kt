@@ -1,6 +1,5 @@
 package com.kyawlinnthant.news.presentation.main
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,9 +12,10 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
 
-) : ViewModel(){
+) : ViewModel() {
 
-    var isDarkTheme : Flow<Boolean?> = emptyFlow()
+    var isDarkTheme: Flow<Boolean?> = emptyFlow()
+
     init {
         viewModelScope.launch {
             isDarkTheme = flow { emit(true) }

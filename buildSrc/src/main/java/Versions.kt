@@ -32,6 +32,7 @@ object Versions {
 
     //test
     val junit = "4.13.2"
+    val coroutinesTest = "1.3.2"
     val extJunit = "1.1.5"
     val espresso = "3.5.1"
     val truth = "1.1.3"

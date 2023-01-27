@@ -52,9 +52,12 @@ dependencies {
     this needs AppDependencies.appDb
     //di
     this needs AppDependencies.appDi
-    //test
-    this unitTests AppDependencies.appUnitTest
+
+    //android test
     this androidTests AppDependencies.appAndroidTest
+    //unit test
+    this unitTests AppDependencies.appUnitTest
+    //google truth
     this androidTest AppDependencies.appTruth
 
 }

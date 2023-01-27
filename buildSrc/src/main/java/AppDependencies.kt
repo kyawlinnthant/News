@@ -116,16 +116,22 @@ object AppDependencies {
 
     //unit test
     private val junit = "junit:junit:${Versions.junit}"
+    private val coroutinesTest =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutinesTest}"
     val appUnitTest = arrayListOf<String>().apply {
         add(junit)
+        add(coroutinesTest)
     }
+
     //android test
     private val extJUnit = "androidx.test.ext:junit:${Versions.extJunit}"
     private val espressoCore = "androidx.test.espresso:espresso-core:${Versions.espresso}"
     val appAndroidTest = arrayListOf<String>().apply {
         add(extJUnit)
         add(espressoCore)
+        add(coroutinesTest)
     }
+
     //truth
     private val truth = "com.google.truth:truth:${Versions.truth}"
     val appTruth get() = truth
