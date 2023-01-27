@@ -8,19 +8,20 @@ plugins {
 }
 @Suppress("UnstableApiUsage") android {
     namespace = "com.kyawlinnthant.news"
-    compileSdk = 33
+    compileSdk = AppConfig.compileSdk
 
     defaultConfig {
         applicationId = "com.kyawlinnthant.news"
-        minSdk = 24
-        targetSdk = 33
+        minSdk = AppConfig.minSdk
+        targetSdk = AppConfig.targetSdk
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.kyawlinnthant.news.db.DbTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
+
         val apiKey = gradleLocalProperties(rootDir).getProperty("API.KEY")
         buildConfigField(type = "String", name = "API_KEY", value = apiKey)
         buildConfigField(type = "String", name = "BASE_URL", value = "\"https://api.themoviedb.org/\"")
@@ -46,7 +47,7 @@ plugins {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.2.0"
+        kotlinCompilerExtensionVersion = Versions.compose
     }
     packagingOptions {
         resources.excludes.add("/META-INF/{AL2.0,LGPL2.1}")
@@ -73,4 +74,7 @@ dependencies {
     this androidTests AppDependencies.appAndroidTest
     //unit test
     this unitTests AppDependencies.appUnitTest
+    //google truth
+    this unitTest AppDependencies.appTruth
+    this androidTest AppDependencies.appTruth
 }

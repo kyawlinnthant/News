@@ -74,6 +74,9 @@ object AppDependencies {
         },
         androidTestImplementations = arrayListOf<String>().apply {
             add(hiltTest)
+        },
+        kaptAndroidTests = arrayListOf<String>().apply {
+            add(hiltKapt)
         }
     )
 
