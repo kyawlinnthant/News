@@ -48,8 +48,13 @@ object AppDependencies {
     private val splash = "androidx.core:core-splashscreen:${Versions.splash}"
     val appSplash get() = splash
     private val systemUi =
-        "com.google.accompanist:accompanist-systemuicontroller:${Versions.systemUi}"
+        "com.google.accompanist:accompanist-systemuicontroller:${Versions.accomplish}"
     val appSystemUi get() = systemUi
+    private val swifeRefresh =
+        "com.google.accompanist:accompanist-swiperefresh:${Versions.accomplish}"
+    val appSwifeRefresh get() = swifeRefresh
+    private val coil = "io.coil-kt:coil-compose:${Versions.coil}"
+    val appCoil get() = coil
 
     //navigation
     private val navigationCompose =
@@ -116,6 +121,14 @@ object AppDependencies {
             add(roomProcessor)
         }
     )
+
+    //datastore
+//    private val datastoreV = ""
+//
+//    implementation "androidx.datastore:datastore:$rootProject.pref_version"
+//    implementation "androidx.datastore:datastore-core:$rootProject.pref_version"
+    private val datastorePref = "androidx.datastore:datastore-preferences:${Versions.pref}"
+    val appPref get() = datastorePref
 
     //unit test
     private val junit = "junit:junit:${Versions.junit}"

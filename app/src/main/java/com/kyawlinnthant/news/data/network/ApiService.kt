@@ -8,10 +8,10 @@ import retrofit2.http.Query
 interface ApiService {
 
     companion object {
-        private const val MOVIES_POPULAR = "3/movie/popular"
+        private const val POPULAR = "3/movie/popular"
     }
 
-    @GET(MOVIES_POPULAR)
+    @GET(POPULAR)
     suspend fun fetchNews(
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,//v3 only support query [ this must be in header shit!! ]
         @Query("page") page: Int = 1

@@ -24,9 +24,10 @@ class NewsDaoTest {
     @get:Rule
     val testRule = HiltAndroidRule(this)
 
+    private lateinit var dao: NewsDao
+
     @Inject
     lateinit var db: NewsDatabase
-    private lateinit var dao: NewsDao
 
     @Before
     fun setup() {

@@ -11,7 +11,8 @@ object Versions {
     val activityCompose = "1.6.1"
     val compose = "1.3.0"
     val splash = "1.0.0"
-    val systemUi = "0.28.0"
+    val accomplish = "0.28.0"
+    val coil = "2.2.2"
     val navigationHilt = "1.0.0"
     val navigationCompose = "2.5.3"
 
@@ -25,6 +26,7 @@ object Versions {
 
     //db
     val room = "2.5.0"
+    val pref = "1.0.0"
 
     //di
     val hilt = "2.44"

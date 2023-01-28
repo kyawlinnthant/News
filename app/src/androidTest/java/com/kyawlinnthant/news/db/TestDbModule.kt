@@ -3,6 +3,7 @@ package com.kyawlinnthant.news.db
 import android.content.Context
 import androidx.room.Room
 import com.kyawlinnthant.news.data.db.DbModule
+import com.kyawlinnthant.news.data.db.NewsDao
 import com.kyawlinnthant.news.data.db.NewsDatabase
 import dagger.Module
 import dagger.Provides
@@ -26,5 +27,11 @@ object TestDbModule {
         context,
         NewsDatabase::class.java
     ).allowMainThreadQueries().build()
+
+    @Provides
+    @Singleton
+    fun provideTestDao(
+        db: NewsDatabase
+    ): NewsDao = db.getNewsDao()
 
 }

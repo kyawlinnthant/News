@@ -1,5 +1,7 @@
 package com.kyawlinnthant.news.di
 
+import com.kyawlinnthant.news.data.ds.PrefDataStore
+import com.kyawlinnthant.news.data.ds.PrefDataStoreImpl
 import com.kyawlinnthant.news.data.repo.NewsRepositoryImpl
 import com.kyawlinnthant.news.domain.NewsRepository
 import dagger.Binds
@@ -14,5 +16,9 @@ interface RepositoryModule {
     @Singleton
     @Binds
     fun bindsRepository(repo: NewsRepositoryImpl): NewsRepository
+
+    @Singleton
+    @Binds
+    fun bindsDataStore(ds: PrefDataStoreImpl): PrefDataStore
 
 }

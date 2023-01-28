@@ -1,11 +1,11 @@
-package com.kyawlinnthant.news.db
+package com.kyawlinnthant.news
 
 import android.app.Application
 import android.content.Context
 import androidx.test.runner.AndroidJUnitRunner
 import dagger.hilt.android.testing.HiltTestApplication
 
-class DbTestRunner : AndroidJUnitRunner() {
+class NewsTestRunner : AndroidJUnitRunner() {
     override fun newApplication(
         cl: ClassLoader?,
         className: String?,

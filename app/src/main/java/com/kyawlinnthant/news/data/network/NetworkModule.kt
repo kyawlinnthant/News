@@ -1,7 +1,6 @@
-package com.kyawlinnthant.news.di
+package com.kyawlinnthant.news.data.network
 
 import com.kyawlinnthant.news.BuildConfig
-import com.kyawlinnthant.news.data.network.ApiService
 import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor
 import dagger.Module
 import dagger.Provides
@@ -15,7 +14,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule {
+object NetworkModule {
 
     @Provides
     @Singleton
@@ -54,4 +53,5 @@ object AppModule {
             .writeTimeout(30, TimeUnit.SECONDS)
             .build()
     }
+
 }

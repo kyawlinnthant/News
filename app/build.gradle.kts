@@ -17,14 +17,18 @@ plugins {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "com.kyawlinnthant.news.db.DbTestRunner"
+        testInstrumentationRunner = "com.kyawlinnthant.news.NewsTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
 
         val apiKey = gradleLocalProperties(rootDir).getProperty("API.KEY")
         buildConfigField(type = "String", name = "API_KEY", value = apiKey)
-        buildConfigField(type = "String", name = "BASE_URL", value = "\"https://api.themoviedb.org/\"")
+        buildConfigField(
+            type = "String",
+            name = "BASE_URL",
+            value = "\"https://api.themoviedb.org/\""
+        )
     }
 
     buildTypes {
@@ -60,6 +64,8 @@ dependencies {
     this implement AppDependencies.appMaterial
     this implement AppDependencies.appSplash
     this implement AppDependencies.appSystemUi
+    this implement AppDependencies.appSwifeRefresh
+    this implement AppDependencies.appCoil
     //compose
     this needs AppDependencies.appCompose
     this implement AppDependencies.appNavigation
@@ -69,6 +75,8 @@ dependencies {
     this needs AppDependencies.appNetwork
     //db
     this needs AppDependencies.appDb
+    //pref
+    this implement AppDependencies.appPref
 
     //android test
     this androidTests AppDependencies.appAndroidTest
