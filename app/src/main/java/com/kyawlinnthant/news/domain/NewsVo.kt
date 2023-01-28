@@ -21,6 +21,21 @@ fun News.toVo() = NewsVo(
     date = this.releasedDate
 )
 
+fun NewsData.toEntity() = News(
+    id = this.id,
+    isAdult = this.isAdult,
+    backdropUrl = this.backdrop,
+    posterUrl = this.poster,
+    language = this.language,
+    title = this.title,
+    overview = this.overview,
+    popularity = this.popularity,
+    releasedDate = this.date,
+    hasVideo = this.video,
+    averageVote = this.voteAverage,
+    votedCount = this.voteCount
+)
+
 fun NewsData.toVo() = NewsVo(
     id = this.id,
     title = this.title,

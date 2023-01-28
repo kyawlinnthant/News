@@ -11,12 +11,10 @@ import com.kyawlinnthant.news.data.network.ApiService
 import com.kyawlinnthant.news.di.DispatcherModule
 import com.kyawlinnthant.news.domain.NewsRepository
 import com.kyawlinnthant.news.domain.NewsVo
+import com.kyawlinnthant.news.domain.toEntity
 import com.kyawlinnthant.news.domain.toVo
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -30,6 +28,11 @@ class NewsRepositoryImpl @Inject constructor(
         val response = safeApiCall { apiService.fetchNews() }
         return flow {
             emit(response)
+        }.onEach { result ->
+            result.data?.let { dto ->
+                val news = dto.results.map { data -> data.toEntity() }
+                newsDao.insertNews(news = news)
+            }
         }.map {
             when (it) {
                 is Result.Error -> Result.Error(it.message)
