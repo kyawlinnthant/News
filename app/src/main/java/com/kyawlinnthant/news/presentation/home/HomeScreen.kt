@@ -11,7 +11,6 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.flow.collectLatest
-import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -99,7 +98,6 @@ fun HomeContent(
 ) {
     when (uiState) {
         is HomeUiState.HasNews -> {
-            Timber.tag("hey.ui.has").d("here")
             HasNewsView(
                 modifier = modifier,
                 data = uiState.news,
@@ -107,11 +105,9 @@ fun HomeContent(
             )
         }
         HomeUiState.FirstTimeLoading -> {
-            Timber.tag("hey.ui.first.load").d("here")
             FirstTimeLoadingView()
         }
         is HomeUiState.FirstTimeError -> {
-            Timber.tag("hey.ui.first.error").d("here")
             FirstTimeErrorView(
                 modifier = modifier,
                 message = uiState.message,

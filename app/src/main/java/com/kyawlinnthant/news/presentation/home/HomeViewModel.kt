@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.kyawlinnthant.news.core.Result
 import com.kyawlinnthant.news.domain.NewsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -34,7 +35,6 @@ class HomeViewModel @Inject constructor(
     private fun readNews() {
         viewModelScope.launch {
             repository.readNews().collect { list ->
-                Timber.tag("hey.db.collect").d("${list.size}")
                 vmState.update {
                     it.copy(
                         news = list,
@@ -50,9 +50,8 @@ class HomeViewModel @Inject constructor(
     fun fetchNews() {
         vmState.update { it.copy(isLoading = true) }
         viewModelScope.launch {
-            when (val result = repository.test()) {
+            when (val result = repository.fetchNews()) {
                 is Result.Error -> {
-                    Timber.tag("hey.network.error").d(result.message)
                     vmState.update {
                         it.copy(
                             error = result.message,
@@ -60,13 +59,14 @@ class HomeViewModel @Inject constructor(
                             news = it.news
                         )
                     }
+                    delay(500L)
+                    if (vmState.value.news.isNotEmpty())
                     vmEvent.emit(HomeUiEvent.NetworkError(message = result.message))
                 }
                 is Result.Success -> {
-                    Timber.tag("hey.network.success").d(result.data!!.size.toString())
                     vmState.update {
                         it.copy(
-                            news = result.data!!,
+                            news = it.news,
                             isLoading = false,
                             error = ""
                         )

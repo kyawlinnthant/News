@@ -23,23 +23,7 @@ class NewsRepositoryImpl @Inject constructor(
     private val pref: PrefDataStore,
     @DispatcherModule.Io private val io: CoroutineDispatcher
 ) : NewsRepository {
-    override suspend fun fetchNews(): Flow<Result<List<NewsVo>>> {
-        val response = safeApiCall { apiService.fetchNews() }
-        return flow { emit(response) }.onEach { result ->
-            result.data?.let { dto ->
-                val news = dto.results.map { it.toEntity() }
-                newsDao.insertNews(news)
-            }
-        }.map { result ->
-            when (result) {
-                is Result.Error -> Result.Error(message = result.message)
-                is Result.Success -> Result.Success(data = result.data?.results?.map { it.toVo() })
-            }
-        }.flowOn(io)
-
-    }
-
-    override suspend fun test(): Result<List<NewsVo>> {
+    override suspend fun fetchNews(): Result<List<NewsVo>> {
         return when (val response = safeApiCall { apiService.fetchNews() }) {
             is Result.Error -> Result.Error(message = response.message)
             is Result.Success -> {
