@@ -101,6 +101,9 @@ object AppDependencies {
             add(localebro)
         }
     )
+    private val timber = "com.jakewharton.timber:timber:${Versions.timber}"
+    val appTimber get() = timber
+
 
     //room
     private val roomRuntime = "androidx.room:room-runtime:${Versions.room}"

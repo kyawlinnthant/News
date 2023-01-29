@@ -15,6 +15,7 @@ object Versions {
     val coil = "2.2.2"
     val navigationHilt = "1.0.0"
     val navigationCompose = "2.5.3"
+    val timber = "5.0.1"
 
 
     //retrofit

@@ -2,7 +2,6 @@ package com.kyawlinnthant.news.data.repo
 
 import com.kyawlinnthant.news.core.Result
 import com.kyawlinnthant.news.core.safeApiCall
-import com.kyawlinnthant.news.data.db.News
 import com.kyawlinnthant.news.data.db.NewsDao
 import com.kyawlinnthant.news.data.ds.PrefDataStore
 import com.kyawlinnthant.news.data.ds.ThemeType
@@ -26,24 +25,38 @@ class NewsRepositoryImpl @Inject constructor(
 ) : NewsRepository {
     override suspend fun fetchNews(): Flow<Result<List<NewsVo>>> {
         val response = safeApiCall { apiService.fetchNews() }
-        return flow {
-            emit(response)
-        }.onEach { result ->
+        return flow { emit(response) }.onEach { result ->
             result.data?.let { dto ->
-                val news = dto.results.map { data -> data.toEntity() }
-                newsDao.insertNews(news = news)
+                val news = dto.results.map { it.toEntity() }
+                newsDao.insertNews(news)
             }
-        }.map {
-            when (it) {
-                is Result.Error -> Result.Error(it.message)
-                is Result.Success -> Result.Success(data = it.data?.results?.map { dto -> dto.toVo() })
+        }.map { result ->
+            when (result) {
+                is Result.Error -> Result.Error(message = result.message)
+                is Result.Success -> Result.Success(data = result.data?.results?.map { it.toVo() })
             }
         }.flowOn(io)
+
+    }
+
+    override suspend fun test(): Result<List<NewsVo>> {
+        return when (val response = safeApiCall { apiService.fetchNews() }) {
+            is Result.Error -> Result.Error(message = response.message)
+            is Result.Success -> {
+                response.data?.let { dto ->
+                    val news = dto.results.map { it.toEntity() }
+                    newsDao.insertNews(news)
+                }
+                Result.Success(data = response.data?.results?.map { it.toVo() })
+            }
+        }
     }
 
 
-    override suspend fun readNews(): Flow<List<News>> {
-        return newsDao.readNews().flowOn(io)
+    override suspend fun readNews(): Flow<List<NewsVo>> {
+        return newsDao.readNews().map { db ->
+            db.map { it.toVo() }
+        }.flowOn(io)
     }
 
     override suspend fun putDynamic(isEnabled: Boolean) {

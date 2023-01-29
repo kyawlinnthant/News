@@ -4,15 +4,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import kotlinx.coroutines.flow.collectLatest
+import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -20,11 +19,32 @@ fun HomeScreen() {
     val topBarScrollState = rememberTopAppBarState()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(state = topBarScrollState)
     val listState = rememberLazyListState()
-    val isScrolled = remember { derivedStateOf { listState.firstVisibleItemIndex > 0 } }
     val snackState: SnackbarHostState = remember { SnackbarHostState() }
 
     val vm: HomeViewModel = hiltViewModel()
     val state = vm.uiState.collectAsState()
+    val event = vm.uiEvent
+
+    LaunchedEffect(key1 = event) {
+        event.collectLatest {
+            when (it) {
+                is HomeUiEvent.NetworkError -> {
+                   val result =  snackState.showSnackbar(
+                        message = it.message,
+                        duration = SnackbarDuration.Indefinite,
+                        actionLabel = "Retry",
+                        withDismissAction = true,
+                    )
+                    when (result) {
+                        SnackbarResult.Dismissed -> Unit
+                        SnackbarResult.ActionPerformed -> vm.fetchNews()
+                    }
+                }
+
+
+            }
+        }
+    }
     Scaffold(
         snackbarHost = { NewsSnackHost(state = snackState) },
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -79,6 +99,7 @@ fun HomeContent(
 ) {
     when (uiState) {
         is HomeUiState.HasNews -> {
+            Timber.tag("hey.ui.has").d("here")
             HasNewsView(
                 modifier = modifier,
                 data = uiState.news,
@@ -86,12 +107,11 @@ fun HomeContent(
             )
         }
         HomeUiState.FirstTimeLoading -> {
+            Timber.tag("hey.ui.first.load").d("here")
             FirstTimeLoadingView()
         }
-        is HomeUiState.NetworkError -> {
-
-        }
         is HomeUiState.FirstTimeError -> {
+            Timber.tag("hey.ui.first.error").d("here")
             FirstTimeErrorView(
                 modifier = modifier,
                 message = uiState.message,

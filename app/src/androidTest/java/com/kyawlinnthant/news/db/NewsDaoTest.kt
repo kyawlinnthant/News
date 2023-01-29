@@ -9,6 +9,7 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
@@ -77,5 +78,11 @@ class NewsDaoTest {
         dao.insertNews(news = news)
         val result = dao.readNews().first()
         assertThat(result.size).isEqualTo(news.size)
+    }
+
+    @Test
+    fun no_data_returns_empty() = runTest {
+        val result = dao.readNews().firstOrNull()
+        assertThat(result).isEmpty()
     }
 }

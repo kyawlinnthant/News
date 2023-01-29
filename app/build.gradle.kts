@@ -66,6 +66,7 @@ dependencies {
     this implement AppDependencies.appSystemUi
     this implement AppDependencies.appSwifeRefresh
     this implement AppDependencies.appCoil
+    this implement AppDependencies.appTimber
     //compose
     this needs AppDependencies.appCompose
     this implement AppDependencies.appNavigation
