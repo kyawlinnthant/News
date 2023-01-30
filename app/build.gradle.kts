@@ -59,6 +59,8 @@ plugins {
 }
 
 dependencies {
+    testImplementation(project(mapOf("path" to ":test-rule")))
+    androidTestImplementation(project(mapOf("path" to ":test-rule")))
     //app dependencies
     this implements AppDependencies.appDependencies
     this implement AppDependencies.appMaterial
@@ -86,4 +88,5 @@ dependencies {
     //google truth
     this unitTest AppDependencies.appTruth
     this androidTest AppDependencies.appTruth
+    this needs AppDependencies.appMockito
 }

@@ -82,7 +82,13 @@ class NewsDaoTest {
 
     @Test
     fun no_data_returns_empty() = runTest {
-        val result = dao.readNews().firstOrNull()
+        val result = dao.readNews().first()
         assertThat(result).isEmpty()
+    }
+
+    @Test
+    fun no_id_news_returns_null() = runTest {
+        val result = dao.readSpecificNews(id = 1234L).first()
+        assertThat(result).isNull()
     }
 }

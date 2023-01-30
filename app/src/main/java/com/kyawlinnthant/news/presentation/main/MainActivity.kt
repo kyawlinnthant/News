@@ -11,6 +11,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.compose.rememberNavController
 import com.kyawlinnthant.news.app.NewsGraph
 import com.kyawlinnthant.news.presentation.theme.NewsTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,6 +29,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val themeStatus = vm.uiTheme.collectAsState()
             val dynamicStatus = vm.uiDynamic.collectAsState()
+            val navController = rememberNavController()
             NewsTheme(
                 themePreference = themeStatus.value,
                 isDynamicEnabled = dynamicStatus.value
@@ -37,7 +39,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.surface
                 ) {
-                    NewsGraph()
+                    NewsGraph(navController = navController)
                 }
             }
         }

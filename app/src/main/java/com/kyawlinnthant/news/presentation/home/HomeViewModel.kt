@@ -10,6 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -117,6 +118,13 @@ class HomeViewModel @Inject constructor(
     fun setDynamic(isEnabled: Boolean) {
         viewModelScope.launch {
             repository.putDynamic(isEnabled)
+        }
+    }
+
+    fun navigateToDetail(id: Long) {
+        Timber.tag("asx").d(id.toString())
+        viewModelScope.launch {
+            vmEvent.emit(HomeUiEvent.NavigateToDetail(id = id))
         }
     }
 }

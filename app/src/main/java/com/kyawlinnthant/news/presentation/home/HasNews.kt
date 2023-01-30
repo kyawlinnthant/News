@@ -1,7 +1,7 @@
 package com.kyawlinnthant.news.presentation.home
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -22,7 +22,8 @@ import com.kyawlinnthant.news.domain.NewsVo
 fun HasNewsView(
     modifier: Modifier = Modifier,
     data: List<NewsVo>,
-    listState: LazyListState
+    listState: LazyListState,
+    onItemClicked: (Long) -> Unit
 ) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
@@ -33,13 +34,19 @@ fun HasNewsView(
             items = data,
             key = { it.id }
         ) { item ->
-            NewsItem(news = item)
+            NewsItem(
+                news = item,
+                onItemClicked = onItemClicked
+            )
         }
     }
 }
 
 @Composable
-private fun NewsItem(news: NewsVo) {
+private fun NewsItem(
+    news: NewsVo,
+    onItemClicked: (Long) -> Unit
+) {
 
 
     Box(
@@ -67,6 +74,9 @@ private fun NewsItem(news: NewsVo) {
 
                         )
                 )
+                .clickable {
+                    onItemClicked(news.id)
+                }
         )
         Column(
             modifier = Modifier
@@ -77,13 +87,13 @@ private fun NewsItem(news: NewsVo) {
                 text = news.title,
                 modifier = Modifier.fillMaxWidth(),
                 style = MaterialTheme.typography.headlineLarge,
-                color = if (isSystemInDarkTheme()) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.surface
+                color = Color.White
             )
             Text(
                 text = news.description,
                 modifier = Modifier.fillMaxWidth(),
                 style = MaterialTheme.typography.bodyMedium,
-                color = if (isSystemInDarkTheme()) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.surface
+                color = Color.White
             )
         }
     }

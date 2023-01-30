@@ -4,9 +4,9 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
-import com.kyawlinnthant.news.TestCoroutinesRule
 import com.kyawlinnthant.news.data.ds.PrefDataStoreImpl
 import com.kyawlinnthant.news.data.ds.PrefModule
+import com.kyawlinnthant.test_rule.TestCoroutinesRule
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules

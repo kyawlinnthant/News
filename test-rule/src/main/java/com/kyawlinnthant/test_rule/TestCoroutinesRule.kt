@@ -1,4 +1,4 @@
-package com.kyawlinnthant.news
+package com.kyawlinnthant.test_rule
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

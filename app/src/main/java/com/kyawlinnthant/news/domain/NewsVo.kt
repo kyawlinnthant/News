@@ -4,12 +4,12 @@ import com.kyawlinnthant.news.data.db.News
 import com.kyawlinnthant.news.data.network.NewsData
 
 data class NewsVo(
-    val id: Long,
-    val title: String,
-    val description: String,
-    val url: String,
-    val voteCount: Int,
-    val date: String,
+    val id: Long = 0L,
+    val title: String = "",
+    val description: String = "",
+    val url: String = "",
+    val voteCount: Int = 0,
+    val date: String = "",
 )
 
 fun News.toVo() = NewsVo(

@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface NewsRepository {
     suspend fun fetchNews(): Result<List<NewsVo>>
     suspend fun readNews(): Flow<List<NewsVo>>
+    suspend fun readSpecificNews(id: Long): Flow<NewsVo>
     suspend fun putDynamic(isEnabled: Boolean)
     suspend fun pullDynamic(): Flow<Boolean>
     suspend fun putTheme(theme: ThemeType)

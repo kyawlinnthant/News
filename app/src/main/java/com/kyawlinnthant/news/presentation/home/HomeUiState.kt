@@ -24,4 +24,5 @@ data class HomeViewModelState(
 
 sealed interface HomeUiEvent {
     data class NetworkError(val message: String) : HomeUiEvent
+    data class NavigateToDetail(val id: Long) : HomeUiEvent
 }

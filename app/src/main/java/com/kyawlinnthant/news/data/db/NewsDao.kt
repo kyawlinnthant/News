@@ -15,7 +15,7 @@ interface NewsDao {
     suspend fun deleteNews(news: News)
 
     @Query("DELETE FROM ${News.NEWS_TABLE} WHERE id = :id")
-    suspend fun deleteSpecificNews(id: String)
+    suspend fun deleteSpecificNews(id: Long)
 
     @Query("DELETE FROM ${News.NEWS_TABLE}")
     suspend fun deleteAllNews()
@@ -24,5 +24,5 @@ interface NewsDao {
     fun readNews(): Flow<List<News>>
 
     @Query("SELECT * FROM ${News.NEWS_TABLE} WHERE id = :id")
-    fun readSpecificNews(id: String): News?
+    fun readSpecificNews(id: Long): Flow<News>
 }

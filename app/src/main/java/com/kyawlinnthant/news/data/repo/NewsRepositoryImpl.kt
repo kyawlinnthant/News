@@ -46,6 +46,10 @@ class NewsRepositoryImpl @Inject constructor(
         }.flowOn(io)
     }
 
+    override suspend fun readSpecificNews(id: Long): Flow<NewsVo> {
+        return newsDao.readSpecificNews(id = id).map { it.toVo() }.flowOn(io)
+    }
+
     override suspend fun putDynamic(isEnabled: Boolean) {
         withContext(io) {
             pref.putEnabledDynamicColor(status = isEnabled)

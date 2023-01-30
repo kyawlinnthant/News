@@ -14,23 +14,25 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.kyawlinnthant.news.app.Destinations
 import com.kyawlinnthant.news.data.ds.ThemeType
 import kotlinx.coroutines.flow.collectLatest
+import timber.log.Timber
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavController) {
     val topBarScrollState = rememberTopAppBarState()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(state = topBarScrollState)
     val listState = rememberLazyListState()
     val snackState: SnackbarHostState = remember { SnackbarHostState() }
-
     val vm: HomeViewModel = hiltViewModel()
     val state = vm.uiState.collectAsState()
     val event = vm.uiEvent
@@ -64,6 +66,10 @@ fun HomeScreen() {
                         SnackbarResult.Dismissed -> Unit
                         SnackbarResult.ActionPerformed -> vm.fetchNews()
                     }
+                }
+                is HomeUiEvent.NavigateToDetail -> {
+                    Timber.tag("asx.screen").d(it.id.toString())
+                    navController.navigate(Destinations.Detail + "/${it.id}")
                 }
             }
         }
@@ -99,7 +105,8 @@ fun HomeScreen() {
             uiState = state.value,
             modifier = Modifier.padding(contentPadding),
             listState = listState,
-            onRetry = vm::fetchNews
+            onRetry = vm::fetchNews,
+            onItemClicked = vm::navigateToDetail
         )
     }
 }
@@ -126,13 +133,15 @@ fun HomeContent(
     uiState: HomeUiState,
     listState: LazyListState,
     onRetry: () -> Unit,
+    onItemClicked: (Long) -> Unit
 ) {
     when (uiState) {
         is HomeUiState.HasNews -> {
             HasNewsView(
                 modifier = modifier,
                 data = uiState.news,
-                listState = listState
+                listState = listState,
+                onItemClicked = onItemClicked
             )
         }
         HomeUiState.FirstTimeLoading -> {

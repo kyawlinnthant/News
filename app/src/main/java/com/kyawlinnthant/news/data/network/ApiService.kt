@@ -9,7 +9,7 @@ import kotlin.random.Random
 interface ApiService {
 
     companion object {
-        private const val POPULAR = "3/movie/popular"
+        const val POPULAR = "3/movie/popular"
     }
 
     @GET(POPULAR)

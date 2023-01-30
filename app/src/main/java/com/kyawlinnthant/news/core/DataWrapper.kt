@@ -22,7 +22,6 @@ inline fun <reified T> safeApiCall(
             return Result.Success(data = body)
         }
         //this will be [400..500]
-        val code = response.code()
         return Result.Error(
             message = response.message(),
         )

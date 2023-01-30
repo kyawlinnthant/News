@@ -92,6 +92,7 @@ object AppDependencies {
     private val retrofitCoroutines =
         "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:${Versions.retrofitCoroutines}"
     private val localebro = "com.localebro:okhttpprofiler:${Versions.localebro}"
+    private val mockWebServer = "com.squareup.okhttp3:mockwebserver:4.10.0"
     val appNetwork = Requirement(
         implementations = arrayListOf<String>().apply {
             add(retrofitV)
@@ -99,6 +100,9 @@ object AppDependencies {
             add(okhttp)
             add(retrofitCoroutines)
             add(localebro)
+        },
+        testImplementations = arrayListOf<String>().apply {
+            add(mockWebServer)
         }
     )
     private val timber = "com.jakewharton.timber:timber:${Versions.timber}"
@@ -126,10 +130,6 @@ object AppDependencies {
     )
 
     //datastore
-//    private val datastoreV = ""
-//
-//    implementation "androidx.datastore:datastore:$rootProject.pref_version"
-//    implementation "androidx.datastore:datastore-core:$rootProject.pref_version"
     private val datastorePref = "androidx.datastore:datastore-preferences:${Versions.pref}"
     val appPref get() = datastorePref
 
@@ -154,5 +154,19 @@ object AppDependencies {
     //truth
     private val truth = "com.google.truth:truth:${Versions.truth}"
     val appTruth get() = truth
+
+    private val unitMockito = "org.mockito:mockito-core:${Versions.mockito}"
+    private val androidMockito = "org.mockito:mockito-core:${Versions.mockito}"
+    private val inlineMockito = "org.mockito:mockito-core:${Versions.mockito}"
+
+    val appMockito = Requirement(
+        testImplementations = arrayListOf<String>().apply {
+            add(unitMockito)
+            add(inlineMockito)
+        },
+        androidTestImplementations = arrayListOf<String>().apply {
+            add(androidMockito)
+        }
+    )
 
 }
