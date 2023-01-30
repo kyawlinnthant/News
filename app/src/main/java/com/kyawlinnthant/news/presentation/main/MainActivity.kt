@@ -26,8 +26,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         setContent {
-            val isDark = vm.isDarkTheme.collectAsState(initial = false).value
-            NewsTheme {
+            val themeStatus = vm.uiTheme.collectAsState()
+            val dynamicStatus = vm.uiDynamic.collectAsState()
+            NewsTheme(
+                themePreference = themeStatus.value,
+                isDynamicEnabled = dynamicStatus.value
+            ) {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),

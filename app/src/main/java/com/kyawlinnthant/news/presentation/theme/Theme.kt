@@ -8,6 +8,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.kyawlinnthant.news.data.ds.ThemeType
 
 private val NewsLightColors = lightColorScheme(
     primary = md_theme_light_primary,
@@ -76,17 +77,26 @@ private val NewsDarkColors = darkColorScheme(
 
 @Composable
 fun NewsTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = true, // Dynamic color is available on Android 12+
+    themePreference: ThemeType,
+    isDynamicEnabled: Boolean,
     content: @Composable () -> Unit
 ) {
     val context = LocalContext.current
-    val isDynamicColor = dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+    val isDynamicColor = isDynamicEnabled && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 
     val colorScheme = when {
-        isDynamicColor && darkTheme -> dynamicDarkColorScheme(context)
-        isDynamicColor && !darkTheme -> dynamicLightColorScheme(context)
-        darkTheme -> NewsDarkColors
+        isDynamicColor && themePreference == ThemeType.DEFAULT && isSystemInDarkTheme() -> dynamicDarkColorScheme(
+            context
+        )
+        isDynamicColor && themePreference == ThemeType.DEFAULT && !isSystemInDarkTheme() -> dynamicLightColorScheme(
+            context
+        )
+        isDynamicColor && themePreference == ThemeType.DARK -> dynamicDarkColorScheme(context)
+        isDynamicColor && themePreference == ThemeType.LIGHT -> dynamicLightColorScheme(context)
+        themePreference == ThemeType.DEFAULT && isSystemInDarkTheme() -> NewsDarkColors
+        themePreference == ThemeType.DEFAULT && !isSystemInDarkTheme() -> NewsLightColors
+        themePreference == ThemeType.DARK -> NewsDarkColors
+        themePreference == ThemeType.LIGHT -> NewsLightColors
         else -> NewsLightColors
     }
 

@@ -1,17 +1,25 @@
 package com.kyawlinnthant.news.data.ds
 
-sealed class ThemeType(val value: Int) {
-    object Default : ThemeType(1)
-    object Light : ThemeType(2)
-    object Dark : ThemeType(3)
+enum class ThemeType {
+    DEFAULT,
+    LIGHT,
+    DARK
+}
 
-    fun Int.asThemeType(): ThemeType {
-        return when (this) {
-            1 -> Default
-            2 -> Light
-            3 -> Dark
-            else -> Default
-        }
+fun Int.asThemeType(): ThemeType {
+    return when (this) {
+        1 -> ThemeType.DEFAULT
+        2 -> ThemeType.LIGHT
+        3 -> ThemeType.DARK
+        else -> ThemeType.DEFAULT
+    }
+}
+
+fun ThemeType.toInt(): Int {
+    return when (this) {
+        ThemeType.DEFAULT -> 1
+        ThemeType.LIGHT -> 2
+        ThemeType.DARK -> 3
     }
 }
 
